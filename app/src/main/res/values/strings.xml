@@ -1,0 +1,18 @@
+<resources>
+    <string name="back4app_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">D5M7wQOFayY4X5lX12EjEEWwADQ9c8tyDnMPPL99</string>
+    <string name="back4app_client_key">Ka5DbS3OpPlozyFx8x0MVuysloTynRQQa2iv9pfy</string>
+    <string name="google_client_id">171418450323-nut2qa3hgbe59mtinldh6kne8ejevr3n.apps.googleusercontent.com</string>
+
+    <string name="app_name">CimeriApp</string>
+    <string name="Password">Password</string>
+    <string name="Email">Email</string>
+    <string name="Login">Log in</string>
+    <string name="ForgotPass">Forgot password?</string>
+    <string name="HaveAcc">Have an account? Register here!</string>
+    <string name="LoginGoogle">Log in with Google</string>
+    <string name="LoginFacebook">Log in with Facebook</string>
+    <string name="ConfirmPassword">Confirm your password</string>
+    <string name="Register">Register</string>
+
+</resources>
