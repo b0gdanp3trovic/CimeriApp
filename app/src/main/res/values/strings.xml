@@ -9,10 +9,11 @@
     <string name="Email">Email</string>
     <string name="Login">Log in</string>
     <string name="ForgotPass">Forgot password?</string>
-    <string name="HaveAcc">Have an account? Register here!</string>
+    <string name="HaveAcc">Don\'t have an account? Register here!</string>
     <string name="LoginGoogle">Log in with Google</string>
     <string name="LoginFacebook">Log in with Facebook</string>
     <string name="ConfirmPassword">Confirm your password</string>
     <string name="Register">Register</string>
+    <string name="FullName">Full name</string>
 
 </resources>
