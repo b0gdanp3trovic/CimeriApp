@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "261056449637",
+    "firebase_url": "https://cimeriapp.firebaseio.com",
+    "project_id": "cimeriapp",
+    "storage_bucket": "cimeriapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261056449637:android:a1c5d4e0de53647e8c4a8c",
+        "android_client_info": {
+          "package_name": "com.example.cimeriapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261056449637-uri5v54mk9e0nfj5ul78fpbdt1nseagu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgYwbOcJON47yeO4EC-_QIdRF2pZuPPhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261056449637-uri5v54mk9e0nfj5ul78fpbdt1nseagu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
