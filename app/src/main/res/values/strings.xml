@@ -16,4 +16,12 @@
     <string name="Register">Register</string>
     <string name="FullName">Full name</string>
 
+    <string name="invalidEmail">Invalid email. Please try again.</string>
+    <string name="collisionEmail">User with the provided email already exists.</string>
+    <string name="emailExists">A user with the provided email already exists.</string>
+    <string name="passwordReq">Password must contain at least 8 characters, and at least one uppercase letter.</string>
+    <string name="passwordMatch">Passwords don\'t match.</string>
+    <string name="invalidFullName">Please provide your full name.</string>
+
+
 </resources>
