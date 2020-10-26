@@ -23,10 +23,14 @@ class RegisterActivity : AppCompatActivity() {
         regButton.setOnClickListener {
             registerViaEmail()
         }
+        
+        reg_linear.setOnClickListener {
+            onClick(this.reg_linear)
+        }
     }
 
 
-    fun registerViaEmail() {
+    private fun registerViaEmail() {
         if(dataValid()) {
             auth.createUserWithEmailAndPassword(
                 regEmail.text.toString(),
@@ -53,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    fun dataValid(): Boolean  {
+    private fun dataValid(): Boolean  {
         //IME I PREZIME
         if(regFullName.text.toString().isEmpty()){
             regFullName.error = getString(R.string.invalidFullName)
@@ -82,5 +86,34 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
+    private fun onClick(view: View) {
+        if (view.id != R.id.loginGoogle && view.id != R.id.loginFacebook && view.id != R.id.loginEmail) {
+            val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+    }
 
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        return when (keyCode) {
+            KeyEvent.KEYCODE_ENTER -> {
+                if (regFullName.isFocused) regEmail.requestFocus()
+                else {
+                    if (regEmail.isFocused) regPassword.requestFocus()
+                    else {
+                        if (regPassword.isFocused) regConfirmPassword.requestFocus()
+                        else {
+                            if (regConfirmPassword.isFocused) {
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                            else super.onKeyUp(keyCode, event)
+                        }
+                    }
+                }
+                true
+            }
+            else -> super.onKeyUp(keyCode, event)
+        }
+    }
+    
 }
