@@ -41,6 +41,10 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             emailPassSignIn()
         }
+        
+        login_linear.setOnClickListener {
+            onClick(this.login_linear)
+        }
 
     }
 
@@ -68,17 +72,41 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun googleSignIn() {
+    private fun googleSignIn() {
         val intent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(intent, RC_SIGN_IN)
     }
 
-    fun handleGoogleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+    private fun handleGoogleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             Toast.makeText(this, "Successfully signed in as ${account?.displayName}.", Toast.LENGTH_LONG).show()
         } catch (e: ApiException) {
             Toast.makeText(this, "Google sign in failed.", Toast.LENGTH_LONG).show()
+        }
+    }
+    
+    private fun onClick(view: View) {
+        if (view.id != R.id.loginGoogle && view.id != R.id.loginFacebook && view.id != R.id.loginEmail) {
+            val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+    }
+    
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        return when (keyCode) {
+            KeyEvent.KEYCODE_ENTER -> {
+                if (loginEmail.isFocused) loginPassword.requestFocus()
+                else {
+                    if (loginPassword.isFocused) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                    else super.onKeyUp(keyCode, event)
+                }
+                true
+            }
+            else -> super.onKeyUp(keyCode, event)
         }
     }
 }
