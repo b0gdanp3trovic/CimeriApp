@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/reg_linear"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <EditText
         android:id="@+id/regFullName"

@@ -1,7 +1,8 @@
-package com.example.cimeriapp
+package com.example.cimeriapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.cimeriapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

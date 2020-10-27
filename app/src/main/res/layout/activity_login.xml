@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/login_linear"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <Button
         android:id="@+id/loginGoogle"
