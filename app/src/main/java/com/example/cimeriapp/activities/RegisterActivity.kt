@@ -89,7 +89,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun onClick(view: View) {
-        if (view.id != R.id.loginGoogle && view.id != R.id.loginFacebook && view.id != R.id.loginEmail) {
+        if (view.id != R.id.regButton && view.id != R.id.regFullName && view.id != R.id.regEmail && view.id != R.id.regPassword && view.id != R.id.regConfirmPassword) {
             val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
