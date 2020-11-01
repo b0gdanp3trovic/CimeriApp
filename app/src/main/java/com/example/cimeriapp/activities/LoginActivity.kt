@@ -91,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
     }
     
     private fun onClick(view: View) {
-        if (view.id != R.id.loginGoogle && view.id != R.id.loginFacebook && view.id != R.id.loginEmail) {
+        if ( view.id != R.id.loginPassword && view.id != R.id.loginButton && view.id != R.id.loginGoogle && view.id != R.id.loginFacebook && view.id != R.id.loginEmail) {
             val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
