@@ -90,13 +90,15 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     
-    private fun onClick(view: View) {
+    fun onClick(view: View) {
         if ( view.id != R.id.loginPassword && view.id != R.id.loginButton && view.id != R.id.loginGoogle && view.id != R.id.loginFacebook && view.id != R.id.loginEmail) {
             val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
     }
-    
+
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         return when (keyCode) {
             KeyEvent.KEYCODE_ENTER -> {
