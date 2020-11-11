@@ -1,4 +1,4 @@
-ppackage com.example.cimeriapp.activities
+package com.example.cimeriapp.activities
 
 import android.app.SearchManager
 import android.content.Intent
