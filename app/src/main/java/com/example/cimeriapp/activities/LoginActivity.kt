@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
-import MainActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
