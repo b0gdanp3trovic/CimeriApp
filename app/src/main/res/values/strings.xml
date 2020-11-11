@@ -27,6 +27,8 @@
     <string name="home">Home</string>
     <string name="home_page">Home page</string>
     <string name="contacts">Contacts</string>
+    <string name="app_label">app label</string>
+    <string name="search_hint">search hint</string>
 
 
 </resources>
