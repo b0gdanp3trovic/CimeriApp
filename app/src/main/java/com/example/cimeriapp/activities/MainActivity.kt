@@ -1,5 +1,5 @@
 package com.example.cimeriapp.activities
-//other change
+
 import android.app.SearchManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
