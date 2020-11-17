@@ -20,7 +20,7 @@ class ContactsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view= inflater.inflate(R.layout.contacts_fragment, container, false)
+        val view= inflater.inflate(R.layout.fragment_contacts, container, false)
         recyclerView = view.findViewById<RecyclerView>(R.id.contacts_recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)

@@ -29,6 +29,10 @@
     <string name="contacts">Contacts</string>
     <string name="app_label">app label</string>
     <string name="search_hint">search hint</string>
+    <string name="title_activity_exmp">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_notifications">Notifications</string>
 
 
 </resources>

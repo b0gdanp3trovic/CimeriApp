@@ -8,9 +8,8 @@ import android.util.Log
 import com.example.cimeriapp.R
 import com.example.cimeriapp.additions.StaticObjects
 import com.example.cimeriapp.fragments.ContactsFragment
-import com.example.cimeriapp.fragments.HomeFragment
+import com.example.cimeriapp.ui.home.HomeFragment
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,16 +24,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction().replace(R.id.container, homeFragment).commit()
-        val home = home_page
-        val contacts = contacts
-        contacts.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.container, contactsFragment)
-                .addToBackStack(null).commit()
-        }
-        home.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.container, homeFragment)
-                .addToBackStack(null).commit()
-        }
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
                 doSearch(query)
