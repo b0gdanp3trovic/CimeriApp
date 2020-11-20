@@ -12,18 +12,18 @@ import com.example.cimeriapp.R
 
 class ChatFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: ChatViewModel
+    private lateinit var chatViewModel: ChatViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
+        chatViewModel =
             ViewModelProviders.of(this).get(ChatViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_chat, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = root.findViewById(R.id.text_chat)
+        chatViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
