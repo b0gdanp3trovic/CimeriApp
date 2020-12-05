@@ -9,27 +9,31 @@
     tools:context=".activities.LoginActivity">
 
     <Button
+        android:background="@drawable/rounded_button"
+        android:layout_height="50dp"
         android:id="@+id/loginGoogle"
         android:layout_marginTop="230dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/LoginGoogle"/>
 
     <Button
+        android:background="@drawable/rounded_button"
+        android:layout_height="50dp"
         android:id="@+id/loginFacebook"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_height="wrap_content"
         android:text="@string/LoginFacebook"/>
 
     <EditText
+        android:padding="3dp"
         android:id="@+id/loginEmail"
+        android:background="@drawable/rounded_elements"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -38,9 +42,11 @@
         />
 
     <EditText
+        android:padding="3dp"
+        android:background="@drawable/rounded_elements"
         android:id="@+id/loginPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -65,9 +71,11 @@
         android:gravity="center">
 
         <Button
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/rounded_button"
+            android:layout_height="50dp"
             android:id="@+id/loginButton"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
             android:onClick="onClick"
             android:text="@string/Login" />
 

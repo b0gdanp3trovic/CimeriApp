@@ -95,8 +95,6 @@ class LoginActivity : AppCompatActivity() {
             val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
-//        val intent = Intent(this, MainActivity::class.java)
-//        startActivity(intent)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {

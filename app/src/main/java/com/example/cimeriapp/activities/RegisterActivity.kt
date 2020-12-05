@@ -1,18 +1,30 @@
 package com.example.cimeriapp.activities
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cimeriapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -25,23 +37,74 @@ class RegisterActivity : AppCompatActivity() {
         regButton.setOnClickListener {
             registerViaEmail()
         }
-        
+
         reg_linear.setOnClickListener {
             onClick(this.reg_linear)
         }
+
+        takePhoto.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permissions, PERMISSION_CODE)
+                } else {
+                    chooseImageGallery();
+                }
+            } else {
+                chooseImageGallery();
+            }
+        }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    chooseImageGallery()
+                } else {
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    var selectedPhotoUri: Uri? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK) {
+            selectedPhotoUri = data?.data
+            takePhoto.setImageURI(data?.data)
+        }
+    }
+
+    private fun chooseImageGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_CHOOSE)
+    }
+
+    companion object {
+        private const val IMAGE_CHOOSE = 1000;
+        private const val PERMISSION_CODE = 1001;
+    }
 
     private fun registerViaEmail() {
-        if(dataValid()) {
+        if (dataValid()) {
             auth.createUserWithEmailAndPassword(
                 regEmail.text.toString(),
                 regPassword.text.toString()
             ).addOnCompleteListener(this) { task ->
-                if(task.isSuccessful) {
+                if (task.isSuccessful) {
                     Log.i("Registration", "Registration successful!")
                     val user = auth.currentUser
                     val intent = Intent(this, LoginActivity::class.java)
+//                    uploadImageToFirebaseStorage()
+                    saveUserToDB()
                     startActivity(intent)
                 } else {
                     Log.w("Registration", "Registration error!")
@@ -49,8 +112,7 @@ class RegisterActivity : AppCompatActivity() {
                     // DA L POSTOJI U BAZI VEĆ
                     try {
                         throw task.exception as Throwable
-                    }
-                    catch(e: FirebaseAuthUserCollisionException) {
+                    } catch (e: FirebaseAuthUserCollisionException) {
                         regEmail.error = getString(R.string.collisionEmail)
                         regEmail.requestFocus()
                     }
@@ -59,28 +121,49 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun dataValid(): Boolean  {
+    private fun uploadImageToFirebaseStorage() {
+        val ref = FirebaseStorage.getInstance().reference.child("images/test.jpg")
+        takePhoto.isDrawingCacheEnabled = true
+        takePhoto.buildDrawingCache()
+        val bitmap = (takePhoto.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        ref.putBytes(data)
+    }
+
+    private fun saveUserToDB() {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().reference
+        if (uid != null) {
+            ref.child("users1").child(uid).push().child("nick").push().setValue(regFullName.text.toString())
+        };
+    }
+
+    private fun dataValid(): Boolean {
         //IME I PREZIME
-        if(regFullName.text.toString().isEmpty()){
+        if (regFullName.text.toString().isEmpty()) {
             regFullName.error = getString(R.string.invalidFullName)
             regFullName.requestFocus()
             return false
         }
         //EMAIL
-        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(regEmail.text.toString()).matches()) {
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(regEmail.text.toString()).matches()) {
             regEmail.error = getString(R.string.invalidEmail)
             regEmail.requestFocus()
             return false
         }
 
         //PASS
-        if(regPassword.text.toString().length < 8 || regPassword.text.toString().count { c -> c.isUpperCase() } == 0) {
+        if (regPassword.text.toString().length < 8 || regPassword.text.toString()
+                .count { c -> c.isUpperCase() } == 0
+        ) {
             regPassword.error = (getString(R.string.passwordReq))
             regPassword.requestFocus()
             return false
         }
         //PASS POTVRDA
-        if(!regPassword.text.toString().equals(regConfirmPassword.text.toString())) {
+        if (!regPassword.text.toString().equals(regConfirmPassword.text.toString())) {
             regPassword.error = getString(R.string.passwordMatch)
             regPassword.requestFocus()
             return false
@@ -90,7 +173,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun onClick(view: View) {
         if (view.id != R.id.regButton && view.id != R.id.regFullName && view.id != R.id.regEmail && view.id != R.id.regPassword && view.id != R.id.regConfirmPassword) {
-            val inputMethodManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager: InputMethodManager =
+                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
     }
@@ -107,8 +191,7 @@ class RegisterActivity : AppCompatActivity() {
                             if (regConfirmPassword.isFocused) {
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
-                            }
-                            else super.onKeyUp(keyCode, event)
+                            } else super.onKeyUp(keyCode, event)
                         }
                     }
                 }
@@ -117,5 +200,5 @@ class RegisterActivity : AppCompatActivity() {
             else -> super.onKeyUp(keyCode, event)
         }
     }
-    
+
 }

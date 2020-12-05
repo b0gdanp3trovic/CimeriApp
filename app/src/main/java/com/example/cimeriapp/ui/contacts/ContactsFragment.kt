@@ -1,19 +1,19 @@
 package com.example.cimeriapp.ui.contacts
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cimeriapp.R
-import com.example.cimeriapp.additions.MyAdapter
-import com.example.cimeriapp.additions.StaticObjects
-import com.example.cimeriapp.ui.chat.ChatViewModel
-import org.w3c.dom.Text
+import com.example.cimeriapp.additions.Friend
+import com.example.cimeriapp.additions.FriendAdapter
+import java.util.ArrayList
 
 class ContactsFragment : Fragment() {
 
@@ -29,8 +29,8 @@ class ContactsFragment : Fragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.contacts_recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = MyAdapter(StaticObjects.myData)
-//            Toast.makeText(context, StaticObjects.myData.toString(), Toast.LENGTH_LONG).show()
+            val users = Friend.myList
+            adapter = FriendAdapter(users, this)
         }
 
         contactsViewModel = ViewModelProviders.of(this).get(ContactsViewModel::class.java)

@@ -2,65 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reg_linear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/reg_linear"
     tools:context=".activities.RegisterActivity">
+
+    <ImageButton
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:id="@+id/takePhoto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/rounded_photo"
+        android:text="@string/take_photo"
+        android:textSize="23sp" />
 
     <EditText
         android:id="@+id/regFullName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="10dp"
-        android:singleLine="true"
+        android:background="@drawable/rounded_elements"
         android:hint="@string/FullName"
-        />
+        android:padding="3dp"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/regEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:singleLine="true"
+        android:background="@drawable/rounded_elements"
         android:hint="@string/Email"
-        />
+        android:padding="3dp"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/regPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:singleLine="true"
+        android:background="@drawable/rounded_elements"
         android:hint="@string/Password"
-        />
+        android:inputType="textPassword"
+        android:padding="3dp"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/regConfirmPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:singleLine="true"
+        android:background="@drawable/rounded_elements"
         android:hint="@string/ConfirmPassword"
-        />
+        android:inputType="textPassword"
+        android:padding="3dp"
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/regButton"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        android:layout_height="wrap_content"
-        android:text="@string/Register"/>
+        android:background="@drawable/rounded_button"
+        android:text="@string/Register" />
 
 </LinearLayout>
