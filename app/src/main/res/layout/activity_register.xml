@@ -10,7 +10,7 @@
 
     <ImageButton
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:id="@+id/takePhoto"
         android:layout_width="150dp"
         android:layout_height="150dp"
