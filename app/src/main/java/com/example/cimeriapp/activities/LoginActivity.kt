@@ -16,9 +16,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_register.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -63,15 +65,17 @@ class LoginActivity : AppCompatActivity() {
 
 
     fun emailPassSignIn() {
-        auth = Firebase.auth
-        auth.signInWithEmailAndPassword(loginEmail.text.toString(), loginPassword.text.toString()).addOnCompleteListener(this) { task ->
-            if(task.isSuccessful) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            } else {
-                Log.w("Registration", "Registration error!")
-                Toast.makeText(baseContext, "Authentication failed", Toast.LENGTH_SHORT).show()
-                Log.w("Reg", task.exception.toString())
+        if(dataValid()){
+            auth = Firebase.auth
+            auth.signInWithEmailAndPassword(loginEmail.text.toString(), loginPassword.text.toString()).addOnCompleteListener(this) { task ->
+                if(task.isSuccessful) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(baseContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                    loginPassword.error = getString(R.string.wrong_comb)
+                    Log.w("Reg", task.exception.toString())
+                }
             }
         }
     }
@@ -112,5 +116,24 @@ class LoginActivity : AppCompatActivity() {
             }
             else -> super.onKeyUp(keyCode, event)
         }
+    }
+
+
+    private fun dataValid(): Boolean {
+
+        //EMAIL
+        if (loginEmail.text.toString().isEmpty()) {
+            loginEmail.error = getString(R.string.emailReqLogin)
+            loginEmail.requestFocus()
+            return false
+        }
+
+        //PASS
+        if(loginPassword.text.toString().isEmpty()) {
+            loginPassword.error = getString(R.string.passReqLogin)
+            loginPassword.requestFocus()
+            return false
+        }
+        return true
     }
 }

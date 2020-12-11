@@ -37,6 +37,9 @@
     <string name="first_name">First name:</string>
     <string name="nick_name">Nickname</string>
     <string name="textview">TextView</string>
+    <string name="wrong_comb">Wrong email or password.</string>
+    <string name="emailReqLogin">Please enter your email.</string>
+    <string name="passReqLogin">Please enter your password.</string>
 
 
 </resources>
