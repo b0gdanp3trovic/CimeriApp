@@ -8,9 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
-import com.bumptech.glide.request.RequestOptions
 import com.example.cimeriapp.R
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 

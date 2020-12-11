@@ -24,7 +24,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
 import java.io.ByteArrayOutputStream
-import java.util.*
+import com.google.firebase.storage.ktx.storage
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -103,7 +103,7 @@ class RegisterActivity : AppCompatActivity() {
                     Log.i("Registration", "Registration successful!")
                     val user = auth.currentUser
                     val intent = Intent(this, LoginActivity::class.java)
-//                    uploadImageToFirebaseStorage()
+                    uploadImageToFirebaseStorage()
                     saveUserToDB()
                     startActivity(intent)
                 } else {
@@ -122,9 +122,9 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun uploadImageToFirebaseStorage() {
-        val ref = FirebaseStorage.getInstance().reference.child("images/test.jpg")
-        takePhoto.isDrawingCacheEnabled = true
-        takePhoto.buildDrawingCache()
+        val uid = FirebaseAuth.getInstance().uid
+        val name = "$uid.jpg"
+        val ref = Firebase.storage.reference.child("images/profile_pictures/$name")
         val bitmap = (takePhoto.drawable as BitmapDrawable).bitmap
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -136,7 +136,8 @@ class RegisterActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().reference
         if (uid != null) {
-            ref.child("users1").child(uid).push().child("nick").push().setValue(regFullName.text.toString())
+            ref.child("users1/$uid/nick").push()
+            ref.child("users1/$uid/nick").setValue(regFullName.text.toString())
         };
     }
 
