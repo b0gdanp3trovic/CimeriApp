@@ -26,4 +26,11 @@
         android:label="fragment_contacts"
         tools:layout="@layout/fragment_contacts"
         />
+
+    <fragment
+        android:id="@+id/navigation_post"
+        android:name="com.example.cimeriapp.ui.post.PostFragment"
+        android:label="fragment_post"
+        tools:layout="@layout/fragment_post"
+        />
 </navigation>

@@ -15,7 +15,6 @@
     <string name="ConfirmPassword">Confirm your password</string>
     <string name="Register">Register</string>
     <string name="FullName">Full name</string>
-
     <string name="invalidEmail">Invalid email. Please try again.</string>
     <string name="collisionEmail">User with the provided email already exists.</string>
     <string name="emailExists">A user with the provided email already exists.</string>
@@ -33,6 +32,7 @@
     <string name="title_chat">Chat</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_contacts">Contacts</string>
+    <string name="title_post">Post</string>
     <string name="take_photo">take photo</string>
     <string name="first_name">First name:</string>
     <string name="nick_name">Nickname</string>
@@ -40,6 +40,32 @@
     <string name="wrong_comb">Wrong email or password.</string>
     <string name="emailReqLogin">Please enter your email.</string>
     <string name="passReqLogin">Please enter your password.</string>
+
+
+    <!-- FRAGMENT POST  -->
+    <string name="address">Address</string>
+    <string name="price_per_month">Price per month</string>
+    <string name="smoker_friendly">Smoker friendly?</string>
+    <string name="pet_friendly">Pet friendly?</string>
+    <string name="no_photos">No photos uploaded.</string>
+    <string name="upload_photo_post">Upload photo</string>
+
+
+    <string-array name="room_num_array">
+        <item>Garsonjera</item>
+        <item>1 room</item>
+        <item>2 rooms</item>
+        <item>3 rooms</item>
+        <item>4 rooms</item>
+        <item>5 rooms or more</item>
+    </string-array>
+
+    <string-array name="currency_array">
+        <item>EUR</item>
+        <item>RSD</item>
+    </string-array>
+
+
 
 
 </resources>
