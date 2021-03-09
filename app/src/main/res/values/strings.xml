@@ -50,6 +50,8 @@
     <string name="no_photos">No photos uploaded.</string>
     <string name="upload_photo_post">Upload photo</string>
 
+    <string name="add_photo">Add photo</string>
+
 
     <string-array name="room_num_array">
         <item>Garsonjera</item>

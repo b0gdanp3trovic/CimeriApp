@@ -89,7 +89,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val IMAGE_CHOOSE = 1000;
+        const val IMAGE_CHOOSE = 1000;
         private const val PERMISSION_CODE = 1001;
     }
 
