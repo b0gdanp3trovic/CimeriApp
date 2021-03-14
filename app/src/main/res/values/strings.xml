@@ -51,6 +51,10 @@
     <string name="upload_photo_post">Upload photo</string>
 
     <string name="add_photo">Add photo</string>
+    <string name="pop_up">Pop-Up</string>
+    <string name="close">close</string>
+    <string name="gallery">gallery</string>
+    <string name="camera">camera</string>
 
 
     <string-array name="room_num_array">

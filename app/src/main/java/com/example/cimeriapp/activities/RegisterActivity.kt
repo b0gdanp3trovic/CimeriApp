@@ -2,6 +2,10 @@ package com.example.cimeriapp.activities
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,31 +13,34 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.example.cimeriapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_register.*
 import java.io.ByteArrayOutputStream
-import com.google.firebase.storage.ktx.storage
+
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         auth = Firebase.auth
-
         regButton.setOnClickListener {
             registerViaEmail()
         }
@@ -48,10 +55,10 @@ class RegisterActivity : AppCompatActivity() {
                     val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
                     requestPermissions(permissions, PERMISSION_CODE)
                 } else {
-                    chooseImageGallery();
+                    PopUpWindow(this).show(supportFragmentManager, "do it")
                 }
             } else {
-                chooseImageGallery();
+                PopUpWindow(this).show(supportFragmentManager, "do it")
             }
         }
     }
@@ -80,17 +87,27 @@ class RegisterActivity : AppCompatActivity() {
             selectedPhotoUri = data?.data
             takePhoto.setImageURI(data?.data)
         }
+        else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            takePhoto.setImageBitmap(imageBitmap)
+        }
     }
 
-    private fun chooseImageGallery() {
+    fun chooseImageGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_CHOOSE)
     }
 
+    fun chooseImageCamera() {
+        val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(takePicture, CAMERA_REQUEST)
+    }
+
     companion object {
-        const val IMAGE_CHOOSE = 1000;
-        private const val PERMISSION_CODE = 1001;
+        const val IMAGE_CHOOSE = 1000
+        const val CAMERA_REQUEST = 1888
+        private const val PERMISSION_CODE = 1001
     }
 
     private fun registerViaEmail() {
@@ -101,7 +118,6 @@ class RegisterActivity : AppCompatActivity() {
             ).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.i("Registration", "Registration successful!")
-                    val user = auth.currentUser
                     val intent = Intent(this, LoginActivity::class.java)
                     uploadImageToFirebaseStorage()
                     saveUserToDB()
@@ -109,7 +125,7 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     Log.w("Registration", "Registration error!")
                     Log.w("Reg", task.exception.toString())
-                    // DA L POSTOJI U BAZI VEĆ
+                    // DA LI POSTOJI U BAZI VEĆ
                     try {
                         throw task.exception as Throwable
                     } catch (e: FirebaseAuthUserCollisionException) {
@@ -138,7 +154,7 @@ class RegisterActivity : AppCompatActivity() {
         if (uid != null) {
             ref.child("users1/$uid/nick").push()
             ref.child("users1/$uid/nick").setValue(regFullName.text.toString())
-        };
+        }
     }
 
     private fun dataValid(): Boolean {
@@ -202,4 +218,30 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    class PopUpWindow (private val registerActivity: RegisterActivity) : DialogFragment() {
+
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+            return activity?.let {
+                // Use the Builder class for convenient dialog construction
+                val builder = AlertDialog.Builder(it)
+                builder.setPositiveButton(R.string.gallery
+                ) { _, _ ->
+                    registerActivity.chooseImageGallery()
+                }
+                    .setNegativeButton(R.string.camera
+                    ) { _, _ ->
+                        registerActivity.chooseImageCamera()
+                    }
+
+                    .setNeutralButton(R.string.close
+                    ) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                // Create the AlertDialog object and return it
+                builder.create()
+            } ?: throw IllegalStateException("Activity cannot be null")
+        }
+    }
 }
+
+
